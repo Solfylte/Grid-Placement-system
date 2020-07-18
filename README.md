@@ -1,3 +1,5 @@
+# Grid placement system and simple map generator
+
 Project demonstrating:
 1. Generating a rectangular map. 
 2. Setting items randomly. 
