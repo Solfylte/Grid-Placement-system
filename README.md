@@ -1,6 +1,6 @@
 # Grid placement system and simple map generator
 
-Project demonstrating:
+Unity project demonstrating:
 1. Generating a rectangular map. 
 2. Setting items randomly. 
 3. Installation of players' items on a given grid.
