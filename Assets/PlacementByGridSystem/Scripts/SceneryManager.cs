@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class SceneryManager : MonoBehaviour
 {
-    public Camera cam;                      //Камера для отримання інформації про об'єкт
-    public List<Scenery> sceneryList;      //Список всіх об'єктів
+    public Camera cam;
+    public List<Scenery> sceneryList;
 
     //Визначення координат для установки даного об'єкта
     public Vector3 getPosition(int x, int z, float cellSize, int index)
@@ -43,6 +43,6 @@ public class SceneryManager : MonoBehaviour
         }
     }
 
-    public static string GetTextInfo(Scenery scenery) => $"Name: {scenery.nameScenery}; Size: {scenery.Size }x{scenery.Size}; ID={scenery.ID}";
+    public static string GetTextInfo(Scenery scenery) => $"Name: {scenery.DisplayedName}; Size: {scenery.Size }x{scenery.Size}; ID={scenery.ID}";
 
 }

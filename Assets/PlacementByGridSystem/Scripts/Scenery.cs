@@ -1,14 +1,11 @@
 ﻿using UnityEngine;
-public class Scenery : MonoBehaviour         //Статичний елемент на мапі
+public class Scenery : MonoBehaviour
 {
-    [SerializeField]
-    public string nameScenery;          //назва об'єкта
-    [SerializeField]
-    uint id;                    //ідентифікаційний номер
-    [SerializeField]
-    ushort size;                //розмір в клітинках (завжди квадрат)
+    [SerializeField] private string displayedName;
+    [SerializeField] private uint id;
+    [SerializeField] private ushort size;
 
-    public string Name { get { return nameScenery; } }
-    public uint ID { get { return id; } }
-    public ushort Size { get { return size; } }
+    public string DisplayedName => displayedName;
+    public uint ID => id;
+    public ushort Size => size;
 }

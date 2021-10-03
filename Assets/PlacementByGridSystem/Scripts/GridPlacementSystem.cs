@@ -3,17 +3,17 @@ using UnityEngine;
 
 public class GridPlacementSystem : MonoBehaviour
 {
-    public SceneryManager sceneryManager;          //менеджер сценері (встановлюєтсья в редакторі)
-    public GameObject placementObject;             //Об'єкт, який додається на мапу
+    [SerializeField] private SceneryManager sceneryManager;
+    [SerializeField] private GameObject placementObject;
 
-    public GameObject fillCellSprite;               // Префаб спрайта підсвітки клітинки під об'єктом який додається на мапу(додаю з редактора)
-    private List<SpriteRenderer> fillCellSpriteRenders = new List<SpriteRenderer>();    //Список спрайтів підсвітки клітинок (формується по кількості клітинок які займає )
-    public Map map;
+    [SerializeField] private GameObject cellHighlightSpritePrefab;
+    private List<SpriteRenderer> fillCellSpriteRenders = new List<SpriteRenderer>();
+    [SerializeField] private Grid grid;
 
-    public Camera cam;
-    public AudioSource setScenerySound;
+    [SerializeField] private Camera cam;
+    [SerializeField] private AudioSource setScenerySound;
 
-    public TouchEventSystem touchEventSystem;
+    [SerializeField] private TouchEventSystem touchEventSystem;
 
     private ushort scenerySize;
 
@@ -22,15 +22,12 @@ public class GridPlacementSystem : MonoBehaviour
         touchEventSystem.doubleTouchMessage += OnEventSetScenery;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (placementObject == null)
             return;
 
          SetGridPosition();
-
-        //CheckToSet();
     }
 
     private Vector3 SetRaycastPosition()
@@ -59,19 +56,19 @@ public class GridPlacementSystem : MonoBehaviour
           if (realPosition==Vector3.zero)
               return;
 
-        placementObject.transform.position =  sceneryManager.getPosition(cellX(realPosition), cellZ(realPosition), map.CellSize, scenerySize);
+        placementObject.transform.position =  sceneryManager.getPosition(cellX(realPosition), cellZ(realPosition), grid.CellSize, scenerySize);
         SetCellFillSpritePosition(cellX(realPosition), cellZ(realPosition), scenerySize);
     }
 
-    private int cellX(Vector3 realPosition)=> (int)((realPosition.x - map.xStartPoint) / map.CellSize);
-    private int cellZ(Vector3 realPosition) => (int)((realPosition.z - map.zStartPoint) / map.CellSize);
+    private int cellX(Vector3 realPosition)=> (int)((realPosition.x - grid.Origin.x) / grid.CellSize);
+    private int cellZ(Vector3 realPosition) => (int)((realPosition.z - grid.Origin.y) / grid.CellSize);
 
     private void SetCellFillSpritePosition(int cellX, int cellZ, ushort scenerySize)
      {
          if (fillCellSpriteRenders.Count == 0)
              return;
 
-        Cell[] cells = map.getCells(cellX, cellZ, scenerySize);
+        Cell[] cells = grid.GetCells(cellX, cellZ, scenerySize);
 
         if (cells.Length!= fillCellSpriteRenders.Count)
         {
@@ -98,11 +95,11 @@ public class GridPlacementSystem : MonoBehaviour
 
     private void AddCellFillSprite()
     {
-        if (fillCellSprite == null)
+        if (cellHighlightSpritePrefab == null)
             return;
 
         for (int i = 0; i < scenerySize * scenerySize; i++)
-            fillCellSpriteRenders.Add(GameObject.Instantiate(fillCellSprite).GetComponent<SpriteRenderer>());
+            fillCellSpriteRenders.Add(GameObject.Instantiate(cellHighlightSpritePrefab).GetComponent<SpriteRenderer>());
     }
 
     private void ClearCellFillSprite()
@@ -124,15 +121,9 @@ public class GridPlacementSystem : MonoBehaviour
         }
 
         scenerySize = sceneryButton.scenery.Size;
-        placementObject = GameObject.Instantiate(sceneryButton.scenery.gameObject, map.transform.position, Quaternion.identity);
+        placementObject = GameObject.Instantiate(sceneryButton.scenery.gameObject, grid.transform.position, Quaternion.identity);
         placementObject.GetComponent<MeshCollider>().enabled = false;
         AddCellFillSprite();
-    }
-
-    public void OnEventButtonCancel()       //Відключив...
-    {
-        Destroy(placementObject);
-        ClearCellFillSprite();
     }
 
     public void OnEventSetScenery()
@@ -140,13 +131,13 @@ public class GridPlacementSystem : MonoBehaviour
         if (placementObject == null)
             return;
 
-        if (!map.IsСellsEmpty(cellX(placementObject.transform.position), cellZ(placementObject.transform.position), scenerySize))
+        if (!grid.IsСellsEmpty(cellX(placementObject.transform.position), cellZ(placementObject.transform.position), scenerySize))
             return;
 
         if (placementObject != null && setScenerySound != null)
             setScenerySound.Play();
 
-        map.markCellsAsBusy(cellX(placementObject.transform.position), cellZ(placementObject.transform.position), scenerySize);
+        grid.MarkCellsAsFilled(cellX(placementObject.transform.position), cellZ(placementObject.transform.position), scenerySize);
 
         placementObject.GetComponent<MeshCollider>().enabled = true;
         placementObject = null;

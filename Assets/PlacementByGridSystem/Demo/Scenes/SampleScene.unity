@@ -735,14 +735,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36b63744414171e4ea2f0d555c2d7c36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 1613606800}
-  terrain: {fileID: 0}
+  grid: {fileID: 1613606800}
+  terrain: {fileID: 1462257800}
   sceneryManager: {fileID: 855156892}
-  thickness: 0.8
+  thickness: 0.796
   fillStep: 2
-  fogOffset: 3
-  fogPlane: {fileID: 1812312162312635509, guid: 94aa2f8c30f7d2e419570366de91c019,
-    type: 3}
+  lenghtOfBoard: 0
 --- !u!4 &293593123
 Transform:
   m_ObjectHideFlags: 0
@@ -789,9 +787,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneryManager: {fileID: 855156892}
   placementObject: {fileID: 0}
-  fillCellSprite: {fileID: 6385004504056353870, guid: d636f9d5d0802114283c2eab39d7fb94,
+  cellHighlightSpritePrefab: {fileID: 6385004504056353870, guid: d636f9d5d0802114283c2eab39d7fb94,
     type: 3}
-  map: {fileID: 1613606800}
+  grid: {fileID: 1613606800}
   cam: {fileID: 963194227}
   setScenerySound: {fileID: 1153453857}
   touchEventSystem: {fileID: 1623412589}
@@ -1946,10 +1944,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interfaceCam: {fileID: 211577334}
   touchEventSystem: {fileID: 1623412589}
-  minZumDistance: 6
-  maxZumDistance: 14
+  minZumDistance: 0
+  maxZumDistance: 0
   additionalCamMuvLimit: 10
-  map: {fileID: 1613606800}
+  grid: {fileID: 1613606800}
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2322,7 +2320,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1293035275}
   m_Layer: 5
-  m_Name: ScrolableButtons
+  m_Name: ButtonHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2617,7 +2615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07d541af1c4e9894ebc0bc0e12ec0d11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollableButtonsTransform: {fileID: 1293035275}
+  buttonsHolder: {fileID: 1293035275}
   leftScrollClamp: 1200
   rightScrollClamp: 50
   scrollSpeed: 40
@@ -2703,6 +2701,82 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1462257798
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1462257801}
+  - component: {fileID: 1462257800}
+  - component: {fileID: 1462257799}
+  m_Layer: 0
+  m_Name: Terrain
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!154 &1462257799
+TerrainCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462257798}
+  m_Material: {fileID: 0}
+  m_Enabled: 1
+  m_TerrainData: {fileID: 15600000, guid: a98797c47c4237445a38d2084a178422, type: 2}
+  m_EnableTreeColliders: 1
+--- !u!218 &1462257800
+Terrain:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462257798}
+  m_Enabled: 1
+  serializedVersion: 6
+  m_TerrainData: {fileID: 15600000, guid: a98797c47c4237445a38d2084a178422, type: 2}
+  m_TreeDistance: 5000
+  m_TreeBillboardDistance: 50
+  m_TreeCrossFadeLength: 5
+  m_TreeMaximumFullLODCount: 50
+  m_DetailObjectDistance: 80
+  m_DetailObjectDensity: 1
+  m_HeightmapPixelError: 5
+  m_SplatMapDistance: 1000
+  m_HeightmapMaximumLOD: 0
+  m_ShadowCastingMode: 2
+  m_DrawHeightmap: 1
+  m_DrawInstanced: 0
+  m_DrawTreesAndFoliage: 1
+  m_ReflectionProbeUsage: 1
+  m_MaterialTemplate: {fileID: 10652, guid: 0000000000000000f000000000000000, type: 0}
+  m_BakeLightProbesForTrees: 1
+  m_PreserveTreePrototypeLayers: 0
+  m_DeringLightProbesForTrees: 1
+  m_ScaleInLightmap: 0.0256
+  m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
+  m_GroupingID: 0
+  m_RenderingLayerMask: 1
+  m_AllowAutoConnect: 1
+--- !u!4 &1462257801
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462257798}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1573727633
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2910,7 +2984,7 @@ GameObject:
   - component: {fileID: 1613606800}
   - component: {fileID: 1613606802}
   m_Layer: 0
-  m_Name: Map_1
+  m_Name: Grid
   m_TagString: map
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2928,12 +3002,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc0871d0cb4aca64c9a8466344d62f77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  origin: {x: 0, y: 0}
   cellSize: 1
-  xLength: 48
-  zLength: 48
-  lenghtOfBoard: 6
-  xStartPoint: 0
-  zStartPoint: 0
+  width: 33
+  height: 38
 --- !u!4 &1613606801
 Transform:
   m_ObjectHideFlags: 0
@@ -3743,7 +3815,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea381afae812b1e438789b60f5819215, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 1613606800}
+  grid: {fileID: 1613606800}
   offset: 0.1
 --- !u!120 &3885089852935682655
 LineRenderer:

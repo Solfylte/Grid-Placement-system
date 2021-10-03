@@ -5,22 +5,19 @@ using UnityEngine.UI;
 
 public class AddSceneryWindow : MonoBehaviour
 {
-    public Transform scrollableButtonsTransform;       //Трансформ об'єкт, який містить кнопки(встановлюється з редактора) 
-    [SerializeField]
-    private float leftScrollClamp, rightScrollClamp;   // Дистанція на яку можна зміщувати об'єкт
-    [SerializeField]
-    private float scrollSpeed;                         // Швидкість прокрутки
+    public Transform buttonsHolder;
+    [SerializeField] private float leftScrollClamp, rightScrollClamp;
+    [SerializeField] private float scrollSpeed;
 
-    private Vector2 startPosition;                     // стартова позиція дотику
+    private Vector2 startPosition;
     private float targetPos;
 
-    // Update is called once per frame
     void Update()
     {
-        Scroll();
+        UpdateScroll();
     }
 
-    public void Scroll()
+    public void UpdateScroll()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -30,8 +27,8 @@ public class AddSceneryWindow : MonoBehaviour
         {
             float curPosition = Input.mousePosition.x / Screen.width - startPosition.x;
 
-            targetPos = Mathf.Clamp(scrollableButtonsTransform.localPosition.x + curPosition*scrollSpeed, -leftScrollClamp, rightScrollClamp);
-            scrollableButtonsTransform.localPosition = new Vector3(targetPos, scrollableButtonsTransform.localPosition.y, scrollableButtonsTransform.localPosition.z);
+            targetPos = Mathf.Clamp(buttonsHolder.localPosition.x + curPosition*scrollSpeed, -leftScrollClamp, rightScrollClamp);
+            buttonsHolder.localPosition = new Vector3(targetPos, buttonsHolder.localPosition.y, buttonsHolder.localPosition.z);
         }
     }
 
